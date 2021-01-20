@@ -1,0 +1,19 @@
+.cart-section {
+  .prod-cell {
+    width: 15%;
+    height: 50%;
+    .prod-image {
+      width: 100%;
+    }
+  }
+  .prod-title {
+    max-width: 190px;
+  }
+  .prod-total {
+    min-width: 60px;
+  }
+  .submit-div {
+    text-align: center;
+    padding-top: 10px;
+  }
+}
