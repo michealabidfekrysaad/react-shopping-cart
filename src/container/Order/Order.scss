@@ -33,7 +33,7 @@ $space-12PX: 12px;
         position: absolute;
         color: red;
         font-weight: 500;
-        font-family: monospace,sans-serif;
+        font-family: monospace, sans-serif;
       }
     }
     button {
@@ -46,6 +46,11 @@ $space-12PX: 12px;
       cursor: pointer;
       float: right;
     }
+    .disabledBtn {
+      background-color: grey;
+      pointer-events: none;
+      color: black;
+    }
   }
   .row:after {
     content: "";
@@ -53,4 +58,3 @@ $space-12PX: 12px;
     clear: both;
   }
 }
-

@@ -35,7 +35,7 @@ const Products = (props) => {
 
   const { ProductsRequest, addToCartA } = props;
   useEffect(() => {
-    ProductsRequest({});
+    ProductsRequest();
   }, [ProductsRequest]);
 
   const addToCart = (product) => {

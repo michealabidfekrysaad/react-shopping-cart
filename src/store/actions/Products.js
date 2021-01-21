@@ -1,8 +1,7 @@
 import * as types from "../types/Products";
 
-export const ProductsRequest = (payload) => ({
-    type: types.GET_PRODUCTS_REQUEST,
-    payload
+export const ProductsRequest = () => ({
+    type: types.GET_PRODUCTS_REQUEST
 })
 
 export const ProductsReceive = (payload) => ({

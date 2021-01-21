@@ -6,9 +6,9 @@ import * as ACTIONS from "../actions/Products";
 // call 3ashan  a3mel call lel  api
 //  put 3ashan a7ot el response gowa el store
 
-export function* getProductsRequest({ payload }) {
+export function* getProductsRequest() {
   try {
-    const response = yield call(API.getProducts, payload);
+    const response = yield call(API.getProducts);
     yield put(ACTIONS.ProductsReceive(response.data));
   } catch (err) {
     console.log(err.config.headers["failed"]);

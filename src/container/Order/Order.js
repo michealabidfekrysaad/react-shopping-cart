@@ -4,25 +4,23 @@ import * as Yup from "yup";
 import Input from "../../component/Input/Input";
 import "./Order.scss";
 import { emptyCart } from "../../store/actions/Cart";
+import Btn from "../../component/Btn/Btn";
 
-const initialValues = {
-  address: "",
-  phoneNumber: "",
-  email: "",
-};
-
-const validationSchema = Yup.object({
-  address: Yup.string().required("Required"),
-  phoneNumber: Yup.string()
-    .required("Required")
-    .test("len", "Must be exactly 10 characters", (val) =>
-      val ? val.length === 10 : null
-    ),
-  email: Yup.string().email("Must be valid E-mail").required("Required"),
-});
-
-const Order = (props) => {
-  const { emptyCart } = props;
+const Order = ({ emptyCart }) => {
+  const initialValues = {
+    address: "",
+    phoneNumber: "",
+    email: "",
+  };
+  const validationSchema = Yup.object({
+    address: Yup.string().required("Required"),
+    phoneNumber: Yup.string()
+      .required("Required")
+      .test("len", "Must be exactly 10 characters", (val) =>
+        val ? val.length === 10 : null
+      ),
+    email: Yup.string().email("Must be valid E-mail").required("Required"),
+  });
   const onSubmit = (values, onSubmitProps) => {
     alert("action submitted");
     onSubmitProps.resetForm();
@@ -43,16 +41,16 @@ const Order = (props) => {
           </div>
           <div className="col-75">
             <Input
-                type= "text"
-                id= "address"
-                name= "address"
-                onBlur= {formik.handleBlur}
-                onChange= {formik.handleChange}
-                value= {formik.values.address}
+              type="text"
+              id="address"
+              name="address"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.address}
             />
-            {formik.errors.address && formik.touched.address ? (
+            {formik.errors.address && formik.touched.address && (
               <div className="err-message">{formik.errors.address}</div>
-            ) : null}
+            )}
           </div>
         </div>
         <div className="row">
@@ -61,16 +59,16 @@ const Order = (props) => {
           </div>
           <div className="col-75">
             <Input
-                type= "number"
-                id= "phoneNumber"
-                name= "phoneNumber"
-                onBlur= {formik.handleBlur}
-                onChange= {formik.handleChange}
-                value= {formik.values.phoneNumber}
+              type="number"
+              id="phoneNumber"
+              name="phoneNumber"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.phoneNumber}
             />
-            {formik.errors.phoneNumber && formik.touched.phoneNumber ? (
+            {formik.errors.phoneNumber && formik.touched.phoneNumber && (
               <div className="err-message">{formik.errors.phoneNumber}</div>
-            ) : null}
+            )}
           </div>
         </div>
         <div className="row">
@@ -79,22 +77,25 @@ const Order = (props) => {
           </div>
           <div className="col-75">
             <Input
-                type= "email"
-                id= "email"
-                name= "email"
-                onBlur= {formik.handleBlur}
-                onChange= {formik.handleChange}
-                value= {formik.values.email}
+              type="email"
+              id="email"
+              name="email"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.email}
             />
-            {formik.errors.email && formik.touched.email ? (
+            {formik.errors.email && formik.touched.email && (
               <div className="err-message">{formik.errors.email}</div>
-            ) : null}
+            )}
           </div>
         </div>
         <div className="row">
-          <button type="submit" disabled={!formik.dirty}>
-            Submit
-          </button>
+          <Btn
+            type="submit"
+            isDisabled={!formik.dirty}
+            className={!formik.dirty ? "disabledBtn" : null}
+            content="Submit"
+          />
         </div>
       </form>
     </div>

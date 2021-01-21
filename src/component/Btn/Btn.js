@@ -1,9 +1,26 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 
-const Btn = ({ size, variant, color, content, handleClick }) => {
+const Btn = ({
+  className,
+  isDisabled,
+  type,
+  size,
+  variant,
+  color,
+  content,
+  handleClick,
+}) => {
   return (
-    <Button size={size} variant={variant} color={color} onClick={handleClick}>
+    <Button
+      type={type}
+      className={className}
+      disabled={isDisabled}
+      size={size}
+      variant={variant}
+      color={color}
+      onClick={handleClick}
+    >
       {content}
     </Button>
   );
