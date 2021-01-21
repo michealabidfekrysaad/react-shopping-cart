@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { connect } from "react-redux";
 import * as Yup from "yup";
-import Input from "../Input/Input";
+import Input from "../../component/Input/Input";
 import "./Order.scss";
 import { emptyCart } from "../../store/actions/Cart";
 
@@ -43,14 +43,12 @@ const Order = (props) => {
           </div>
           <div className="col-75">
             <Input
-              inputInfo={{
-                type: "text",
-                id: "address",
-                name: "address",
-                onBlur: formik.handleBlur,
-                onChange: formik.handleChange,
-                value: formik.values.address,
-              }}
+                type= "text"
+                id= "address"
+                name= "address"
+                onBlur= {formik.handleBlur}
+                onChange= {formik.handleChange}
+                value= {formik.values.address}
             />
             {formik.errors.address && formik.touched.address ? (
               <div className="err-message">{formik.errors.address}</div>
@@ -63,14 +61,12 @@ const Order = (props) => {
           </div>
           <div className="col-75">
             <Input
-              inputInfo={{
-                type: "number",
-                id: "phoneNumber",
-                name: "phoneNumber",
-                onBlur: formik.handleBlur,
-                onChange: formik.handleChange,
-                value: formik.values.phoneNumber,
-              }}
+                type= "number"
+                id= "phoneNumber"
+                name= "phoneNumber"
+                onBlur= {formik.handleBlur}
+                onChange= {formik.handleChange}
+                value= {formik.values.phoneNumber}
             />
             {formik.errors.phoneNumber && formik.touched.phoneNumber ? (
               <div className="err-message">{formik.errors.phoneNumber}</div>
@@ -83,14 +79,12 @@ const Order = (props) => {
           </div>
           <div className="col-75">
             <Input
-              inputInfo={{
-                type: "email",
-                id: "email",
-                name: "email",
-                onBlur: formik.handleBlur,
-                onChange: formik.handleChange,
-                value: formik.values.email,
-              }}
+                type= "email"
+                id= "email"
+                name= "email"
+                onBlur= {formik.handleBlur}
+                onChange= {formik.handleChange}
+                value= {formik.values.email}
             />
             {formik.errors.email && formik.touched.email ? (
               <div className="err-message">{formik.errors.email}</div>

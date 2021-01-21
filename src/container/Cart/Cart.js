@@ -15,7 +15,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Btn from "../Btn/Btn";
+import Btn from "../../component/Btn/Btn";
 
 import "./Cart.scss";
 
@@ -81,34 +81,28 @@ const Cart = (props) => {
                   <TableCell className="prod-total">{prod.total}</TableCell>
                   <TableCell>
                     <Btn
-                      btnInfo={{
-                        size: "small",
-                        variant: "contained",
-                        color: "secondary",
-                        content: "-",
-                        handleClick: () => handleDecrease(prod),
-                      }}
+                        size= "small"
+                        variant= "contained"
+                        color= "secondary"
+                        content= "-"
+                        handleClick= {() => handleDecrease(prod)}
                     />
                     &nbsp;
                     <Btn
-                      btnInfo={{
-                        size: "small",
-                        variant: "contained",
-                        color: "primary",
-                        content: "+",
-                        handleClick: () => handleIncrease(prod),
-                      }}
+                        size= "small"
+                        variant= "contained"
+                        color= "primary"
+                        content= "+"
+                        handleClick= {() => handleIncrease(prod)}
                     />
                   </TableCell>
                   <TableCell>
                     <Btn
-                      btnInfo={{
-                        size: "small",
-                        variant: "contained",
-                        color: "secondary",
-                        content: "Remove",
-                        handleClick: () => handleDelete(prod),
-                      }}
+                        size= "small"
+                        variant= "contained"
+                        color= "secondary"
+                        content= "Remove"
+                        handleClick= {() => handleDelete(prod)}
                     />
                   </TableCell>
                 </TableRow>
@@ -119,13 +113,11 @@ const Cart = (props) => {
       </TableContainer>
       <div className="submit-div">
         <Btn
-          btnInfo={{
-            size: "small",
-            variant: "outlined",
-            color: "default",
-            content: "Submit",
-            handleClick: () => handleSubmit(),
-          }}
+            size= "small"
+            variant= "outlined"
+            color= "default"
+            content= "Submit"
+            handleClick= {() => handleSubmit()}
         />
         &nbsp;
       </div>

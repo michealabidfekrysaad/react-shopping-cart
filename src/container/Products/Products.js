@@ -4,12 +4,12 @@ import { addToCartA } from "../../store/actions/Cart";
 import loader from "../../../src/loader.svg";
 import { useHistory } from "react-router-dom";
 
-import Product from "../Product/Product";
+import Product from "../../component/Product/Product";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import Btn from "../Btn/Btn";
+import Btn from "../../component/Btn/Btn";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,29 +65,28 @@ const Products = (props) => {
                         addToCart,
                       }}
                     />
-                    <hr/>
+                    <hr />
                     <Btn
-                      btnInfo={{
-                        size: "small",
-                        variant: "outlined",
-                        color: "secondary",
-                        content: "Details",
-                        handleClick: () =>
-                          goToProductDetails({
-                            id,
-                            title,
-                            description,
-                            image,
-                            price,
-                          }),
-                      }}
+                      size="small"
+                      variant="outlined"
+                      color="secondary"
+                      content="Details"
+                      handleClick={() =>
+                        goToProductDetails({
+                          id,
+                          title,
+                          description,
+                          image,
+                          price,
+                        })
+                      }
                     />
                   </Paper>
                 </Grid>
               );
             })
           ) : props.loading ? (
-            <div className="loader-class">
+            <div className="loader">
               <img src={loader} alt="My logo" />
             </div>
           ) : null}

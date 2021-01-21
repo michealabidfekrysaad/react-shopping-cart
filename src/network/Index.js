@@ -1,6 +1,6 @@
 import axios from "axios";
 import { requestHandler, successHandler, errorHandler } from "./Interceptors";
-import { baseURL } from "../utils.js/Constant";
+import { baseURL } from "../utils/Constant";
 
 
 export const axiosInstance = axios.create({

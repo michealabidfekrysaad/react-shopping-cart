@@ -11,32 +11,25 @@ import {
   subtractQuantity,
 } from "../../store/actions/Cart";
 
-
-const Navbar = (props) => {
+const Navbar = ({
+  total,
+  products,
+  removeFromCart,
+  addQuantity,
+  subtractQuantity,
+}) => {
   const history = useHistory();
 
-  const {
-    total,
-    products,
-    removeFromCart,
-    addQuantity,
-    subtractQuantity,
-  } = props;
-
-
-  const handleIncrease = (prod) => {
+  const increaseProductQty = (prod) => {
     addQuantity(prod);
   };
 
-  const handleDecrease = (prod) => {
+  const decreaseProductQty = (prod) => {
     subtractQuantity(prod);
   };
 
-  const handleDelete = (product) => {
+  const deleteProductFromCart = (product) => {
     removeFromCart(product);
-  };
-  const handleSubmit = () => {
-    history.push("/cart");
   };
 
   return (
@@ -72,7 +65,7 @@ const Navbar = (props) => {
           <ul className="navbar-nav mr-auto">
             <li className="nav-item dropdown">
               <Link
-              to={""}
+                to={""}
                 className="nav-link my-dropdown-toggle"
                 id="navbarDropdown"
                 role="button"
@@ -91,7 +84,7 @@ const Navbar = (props) => {
                         <React.Fragment key={product.id}>
                           <p
                             className="product-actions"
-                            onClick={() => handleDecrease(product)}
+                            onClick={() => decreaseProductQty(product)}
                           >
                             -
                           </p>
@@ -103,28 +96,27 @@ const Navbar = (props) => {
                           with Qty: {product.qty}
                           <p
                             className="product-actions"
-                            onClick={() => handleIncrease(product)}
+                            onClick={() => increaseProductQty(product)}
                           >
                             +
                           </p>
                           <p
                             className="product-actions"
-                            onClick={() => handleDelete(product)}
+                            onClick={() => deleteProductFromCart(product)}
                           >
                             remove
                           </p>
                         </React.Fragment>
                       );
                     })}
-                    <Btn
-                      btnInfo={{
-                        size: "small",
-                        variant: "outlined",
-                        color: "primary",
-                        content: "Review order",
-                        handleClick: () => handleSubmit(),
-                      }}
-                    />
+                    <Link to="/cart">
+                      <Btn
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        content="Review order"
+                      />
+                    </Link>
                   </div>
                 ) : (
                   <p>you have no product</p>
@@ -133,7 +125,7 @@ const Navbar = (props) => {
             </li>
             <li className="nav-item dropdown">
               <Link
-              to={""}
+                to={""}
                 className="nav-link my-dropdown-toggle"
                 id="navbarDropdown"
                 role="button"
@@ -144,8 +136,12 @@ const Navbar = (props) => {
                 <AccountCircleIcon fontSize="large" />
               </Link>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <Link className="dropdown-item" to={""}>View / Edit Profile</Link>
-                <Link className="dropdown-item" to={""}>Sign out</Link>
+                <Link className="dropdown-item" to={""}>
+                  View / Edit Profile
+                </Link>
+                <Link className="dropdown-item" to={""}>
+                  Sign out
+                </Link>
               </div>
             </li>
           </ul>

@@ -1,6 +1,6 @@
 $background-color: #3f51b5;
 
-%message-shared {
+%container-shared {
   margin: 0 auto;
   max-width: 1300px;
   padding-right: 0px;
@@ -8,9 +8,9 @@ $background-color: #3f51b5;
 }
 
 .container-fluid {
-  @extend %message-shared;
+  @extend %container-shared;
 }
-.loader-class {
-  @extend %message-shared;
+.loader {
+  @extend %container-shared;
   margin-top: 100px;
 }
