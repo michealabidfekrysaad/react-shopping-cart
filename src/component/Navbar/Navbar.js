@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Icon from "@material-ui/core/Icon";
 import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -21,6 +21,7 @@ const Navbar = ({
   increaseQuantity,
   decreaseQuantity,
 }) => {
+
   const increaseProductQty = (product) => {
     product.qty += 1;
     product.total += product.price;
@@ -85,7 +86,7 @@ const Navbar = ({
               <ShoppingCart fontSize="large" />
               <span>{total}</span>
             </Link>
-            <div className="dropdown-menu" aria-labelledby="cartDropdown">
+            <div className="dropdown-menu" aria-labelledby="cartDropdown" onClick={e => e.stopPropagation()}>
               {products.length ? (
                 <>
                   {products.map((product) => {
