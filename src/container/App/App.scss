@@ -1,16 +1,1 @@
-$background-color: #3f51b5;
-
-%container-shared {
-  margin: 0 auto;
-  max-width: 1300px;
-  padding-right: 0px;
-  padding-left: 0px;
-}
-
-.container-fluid {
-  @extend %container-shared;
-}
-.loader {
-  @extend %container-shared;
-  margin-top: 100px;
-}
+@import "../../scss//base.scss"
