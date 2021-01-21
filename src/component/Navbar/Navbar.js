@@ -18,7 +18,7 @@ const Navbar = ({
   addQuantity,
   subtractQuantity,
 }) => {
-  const history = useHistory();
+  // const history = useHistory();
 
   const increaseProductQty = (prod) => {
     addQuantity(prod);
@@ -34,7 +34,7 @@ const Navbar = ({
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light topnav">
-      <Link to={"/"} className="links">
+      <Link to="/" className="links">
         <Home fontSize="large" />
       </Link>
       <button
@@ -48,26 +48,25 @@ const Navbar = ({
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
+      <div className="collapse navbar-collapse my-flex-box" id="navbarSupportedContent">
+        <ul className="navbar-nav">
           <li className="nav-item active">
-            <Link className="links" to={"/"}>
+            <Link className="links" to="/">
               Home
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="links" to={"/cart"}>
+            <Link className="links" to="/cart">
               Cart
             </Link>
           </li>
         </ul>
-        <form className="form-inline my-2 my-lg-0">
-          <ul className="navbar-nav mr-auto">
+          <ul className="navbar-nav">
             <li className="nav-item dropdown">
               <Link
-                to={""}
+                to=""
                 className="nav-link my-dropdown-toggle"
-                id="navbarDropdown"
+                id="cartDropdown"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
@@ -76,9 +75,9 @@ const Navbar = ({
                 <ShoppingCart fontSize="large" />
                 <span>{total}</span>
               </Link>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <div className="dropdown-menu" aria-labelledby="cartDropdown">
                 {products.length ? (
-                  <div>
+                  <>
                     {products.map((product) => {
                       return (
                         <React.Fragment key={product.id}>
@@ -117,7 +116,7 @@ const Navbar = ({
                         content="Review order"
                       />
                     </Link>
-                  </div>
+                  </>
                 ) : (
                   <p>you have no product</p>
                 )}
@@ -125,9 +124,9 @@ const Navbar = ({
             </li>
             <li className="nav-item dropdown">
               <Link
-                to={""}
+                to=""
                 className="nav-link my-dropdown-toggle"
-                id="navbarDropdown"
+                id="profileDropdown"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
@@ -135,17 +134,16 @@ const Navbar = ({
               >
                 <AccountCircleIcon fontSize="large" />
               </Link>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <Link className="dropdown-item" to={""}>
+              <div className="dropdown-menu" aria-labelledby="profileDropdown">
+                <Link className="dropdown-item" to="">
                   View / Edit Profile
                 </Link>
-                <Link className="dropdown-item" to={""}>
+                <Link className="dropdown-item" to="">
                   Sign out
                 </Link>
               </div>
             </li>
           </ul>
-        </form>
       </div>
     </nav>
   );
