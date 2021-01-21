@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { ProductsRequest } from "../../store/actions/Products";
 import { AddToCart } from "../../store/actions/Cart";
-import loader from "../../../src/loader.svg";
+import loader from "../../../src/assets/loader.svg";
 import { useHistory } from "react-router-dom";
 
 import Product from "../../component/Product/Product";
