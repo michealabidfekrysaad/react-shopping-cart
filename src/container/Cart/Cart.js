@@ -36,13 +36,13 @@ const Cart = (props) => {
   const { removeFromCart, increaseQuantity, decreaseQuantity } = props;
 
   const classes = useStyles();
-  const handleIncrease = (product) => {
+  const increaseProduct = (product) => {
     product.qty +=1;
     product.total += product.price;
     increaseQuantity(product);
   };
 
-  const handleDecrease = (product) => {
+  const decreaseProduct = (product) => {
     if (product.qty !== 1) {
       product.qty -= 1;
       product.total = product.qty * product.price;
@@ -50,7 +50,7 @@ const Cart = (props) => {
     }
   };
 
-  const handleDelete = (product) => {
+  const deleteProduct = (product) => {
     removeFromCart(product);
   };
   const handleSubmit = () => {
@@ -93,7 +93,7 @@ const Cart = (props) => {
                         variant= "contained"
                         color= "secondary"
                         content= "-"
-                        handleClick= {() => handleDecrease(prod)}
+                        handleClick= {() => decreaseProduct(prod)}
                     />
                     &nbsp;
                     <Btn
@@ -101,7 +101,7 @@ const Cart = (props) => {
                         variant= "contained"
                         color= "primary"
                         content= "+"
-                        handleClick= {() => handleIncrease(prod)}
+                        handleClick= {() => increaseProduct(prod)}
                     />
                   </TableCell>
                   <TableCell>
@@ -110,7 +110,7 @@ const Cart = (props) => {
                         variant= "contained"
                         color= "secondary"
                         content= "Remove"
-                        handleClick= {() => handleDelete(prod)}
+                        handleClick= {() => deleteProduct(prod)}
                     />
                   </TableCell>
                 </TableRow>
