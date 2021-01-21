@@ -21,7 +21,6 @@ const Navbar = ({
   addQuantity,
   subtractQuantity,
 }) => {
-  // const history = useHistory();
 
   const increaseProductQty = (prod) => {
     addQuantity(prod);

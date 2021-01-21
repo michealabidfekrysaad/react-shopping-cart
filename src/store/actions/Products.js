@@ -9,3 +9,15 @@ export const ProductsReceive = (payload) => ({
     payload
 })
 
+// productDetails
+
+export const ProductsDetailsRequest = (payload) => ({
+    type: types.GET_PRODUCTS_DETAILS_REQUEST,
+    payload
+})
+
+export const ProductsDetailsReceive = (payload) => ({
+    type: types.GET_PRODUCTS_DETAILS_RECEIVE,
+    payload
+})
+

@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import { ProductsRequest } from "../../store/actions/Products";
+import {
+  ProductsRequest,
+  ProductsDetailsRequest,
+} from "../../store/actions/Products";
 import { addToCartA } from "../../store/actions/Cart";
 import loader from "../../../src/loader.svg";
 import { useHistory } from "react-router-dom";
@@ -33,7 +36,7 @@ const Products = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { ProductsRequest, addToCartA } = props;
+  const { ProductsRequest, addToCartA, ProductsDetailsRequest } = props;
   useEffect(() => {
     ProductsRequest();
   }, [ProductsRequest]);
@@ -43,7 +46,10 @@ const Products = (props) => {
   };
 
   const goToProductDetails = (prod) => {
-    history.push("/product-details", { product: prod });
+    history.push({
+      pathname: `/product-details/${prod.id}`,
+      state: `${prod.id}`,
+    });
   };
 
   return (
@@ -103,6 +109,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { ProductsRequest, addToCartA })(
-  Products
-);
+export default connect(mapStateToProps, {
+  ProductsRequest,
+  addToCartA,
+  ProductsDetailsRequest,
+})(Products);
