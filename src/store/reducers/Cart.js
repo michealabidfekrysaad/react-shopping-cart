@@ -6,7 +6,6 @@ const initialState = {
   total: 0,
 };
 
-
 export const CartReducer = (state = initialState, action) => {
   let product = action.payload;
   switch (action.type) {
@@ -43,29 +42,24 @@ export const CartReducer = (state = initialState, action) => {
         products: newProducts,
       };
 
+      
     case typesProduct.ADD_QUANTITY:
-      product.qty += 1;
-      product.total += product.price;
       return {
         ...state,
         total: state.total + 1,
         products: [...state.products],
       };
 
-    case typesProduct.SUB_QUANTITY:
-      if (product.qty !== 1) {
-        product.qty -= 1;
-        product.total = product.qty * product.price;
-        return {
-          ...state,
-          total: state.total - 1,
-          products: [...state.products],
-        };
-      }
-      return state;
 
-      case types.EMPTY_CART:
-    return initialState;
+    case typesProduct.SUB_QUANTITY:
+      return {
+        ...state,
+        total: state.total - 1,
+        products: [...state.products],
+      };
+
+    case types.RESET_CART:
+      return initialState;
 
     default:
       return state;

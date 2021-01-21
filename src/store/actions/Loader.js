@@ -1,14 +1,14 @@
 import * as types from "../types/Loader";
 
-export const loader = isLoading => {
-  return isLoading
+export const loader = payload => {
+  return payload
     ? {
         type: types.SHOW_LOADER,
-        data: isLoading
+        payload
       }
     : {
         type: types.HIDE_LOADER,
-        data: isLoading
+        payload
       };
 };
 

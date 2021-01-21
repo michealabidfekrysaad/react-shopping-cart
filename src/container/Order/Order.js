@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import * as Yup from "yup";
 import Input from "../../component/Input/Input";
 import "./Order.scss";
-import { emptyCart } from "../../store/actions/Cart";
+import { resetCart } from "../../store/actions/Cart";
 import Btn from "../../component/Btn/Btn";
 
-const Order = ({ emptyCart }) => {
+const Order = ({ resetCart }) => {
   const initialValues = {
     address: "",
     phoneNumber: "",
@@ -24,7 +24,7 @@ const Order = ({ emptyCart }) => {
   const onSubmit = (values, onSubmitProps) => {
     alert("action submitted");
     onSubmitProps.resetForm();
-    emptyCart();
+    resetCart();
   };
   const formik = useFormik({
     initialValues,
@@ -102,4 +102,4 @@ const Order = ({ emptyCart }) => {
   );
 };
 
-export default connect(null, { emptyCart })(Order);
+export default connect(null, { resetCart })(Order);

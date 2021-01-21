@@ -12,8 +12,8 @@ export const AddToCart = payload => {
       payload,
     };
   };
-  export const emptyCart = () => {
+  export const resetCart = () => {
     return {
-      type: types.EMPTY_CART,
+      type: types.RESET_CART,
     };
   };

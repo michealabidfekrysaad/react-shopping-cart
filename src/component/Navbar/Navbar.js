@@ -9,7 +9,10 @@ import { Home, ShoppingCart } from "@material-ui/icons";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Btn from "../Btn/Btn";
 import { removeFromCart } from "../../store/actions/Cart";
-import { decreaseQuantity, increaseQuantity } from "../../store/actions/Products";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+} from "../../store/actions/Products";
 
 const Navbar = ({
   total,
@@ -18,12 +21,18 @@ const Navbar = ({
   increaseQuantity,
   decreaseQuantity,
 }) => {
-  const increaseProductQty = (prod) => {
-    increaseQuantity(prod);
+  const increaseProductQty = (product) => {
+    product.qty += 1;
+    product.total += product.price;
+    increaseQuantity(product);
   };
 
-  const decreaseProductQty = (prod) => {
-    decreaseQuantity(prod);
+  const decreaseProductQty = (product) => {
+    if (product.qty !== 1) {
+      product.qty -= 1;
+      product.total = product.qty * product.price;
+      decreaseQuantity(product);
+    }
   };
 
   const deleteProductFromCart = (product) => {

@@ -36,12 +36,18 @@ const Cart = (props) => {
   const { removeFromCart, increaseQuantity, decreaseQuantity } = props;
 
   const classes = useStyles();
-  const handleIncrease = (prod) => {
-    increaseQuantity(prod);
+  const handleIncrease = (product) => {
+    product.qty +=1;
+    product.total += product.price;
+    increaseQuantity(product);
   };
 
-  const handleDecrease = (prod) => {
-    decreaseQuantity(prod);
+  const handleDecrease = (product) => {
+    if (product.qty !== 1) {
+      product.qty -= 1;
+      product.total = product.qty * product.price;
+      decreaseQuantity(product);
+    }
   };
 
   const handleDelete = (product) => {
