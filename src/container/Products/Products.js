@@ -40,6 +40,7 @@ const Products = (props) => {
 
   const addProdToCart = (product) => {
     AddToCart(product);
+    history.push('/cart')
   };
 
   const goToProductDetails = (prod) => {
