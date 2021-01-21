@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import {
-  ProductsRequest,
-  ProductsDetailsRequest,
+  ProductsRequest
 } from "../../store/actions/Products";
-import { addToCartA } from "../../store/actions/Cart";
+import { AddToCart } from "../../store/actions/Cart";
 import loader from "../../../src/loader.svg";
 import { useHistory } from "react-router-dom";
 
@@ -36,13 +35,13 @@ const Products = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { ProductsRequest, addToCartA, ProductsDetailsRequest } = props;
+  const { ProductsRequest, AddToCart } = props;
   useEffect(() => {
     ProductsRequest();
   }, [ProductsRequest]);
 
-  const addToCart = (product) => {
-    addToCartA(product);
+  const addProdToCart = (product) => {
+    AddToCart(product);
   };
 
   const goToProductDetails = (prod) => {
@@ -68,7 +67,7 @@ const Products = (props) => {
                         title,
                         description,
                         price,
-                        addToCart,
+                        addProdToCart,
                       }}
                     />
                     <hr />
@@ -111,6 +110,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   ProductsRequest,
-  addToCartA,
-  ProductsDetailsRequest,
+  AddToCart,
 })(Products);

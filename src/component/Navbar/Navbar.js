@@ -1,33 +1,29 @@
 import React from "react";
 import Icon from "@material-ui/core/Icon";
 import RemoveIcon from "@material-ui/icons/Remove";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Navbar.scss";
 import { Home, ShoppingCart } from "@material-ui/icons";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Btn from "../Btn/Btn";
-import {
-  removeFromCart,
-  addQuantity,
-  subtractQuantity,
-} from "../../store/actions/Cart";
+import { removeFromCart } from "../../store/actions/Cart";
+import { decreaseQuantity, increaseQuantity } from "../../store/actions/Products";
 
 const Navbar = ({
   total,
   products,
   removeFromCart,
-  addQuantity,
-  subtractQuantity,
+  increaseQuantity,
+  decreaseQuantity,
 }) => {
-
   const increaseProductQty = (prod) => {
-    addQuantity(prod);
+    increaseQuantity(prod);
   };
 
   const decreaseProductQty = (prod) => {
-    subtractQuantity(prod);
+    decreaseQuantity(prod);
   };
 
   const deleteProductFromCart = (product) => {
@@ -118,7 +114,7 @@ const Navbar = ({
                             color="primary"
                           />
                         </p>
-                        <br/>
+                        <br />
                       </React.Fragment>
                     );
                   })}
@@ -172,6 +168,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   removeFromCart,
-  addQuantity,
-  subtractQuantity,
+  increaseQuantity,
+  decreaseQuantity,
 })(Navbar);

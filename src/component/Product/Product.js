@@ -51,7 +51,7 @@ const Product = ({ cardInfo }) => {
           size="small"
           color="primary"
           onClick={() => {
-            cardInfo.addToCart(cardInfo);
+            cardInfo.addProdToCart(cardInfo);
           }}
         >
           Add To Cart

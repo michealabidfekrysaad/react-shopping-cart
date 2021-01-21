@@ -34,7 +34,7 @@ const Order = ({ emptyCart }) => {
 
   return (
     <div className="container">
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit} noValidate >
         <div className="row">
           <div className="col-25">
             <label htmlFor="address">Address</label>

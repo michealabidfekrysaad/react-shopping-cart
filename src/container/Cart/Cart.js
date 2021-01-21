@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   removeFromCart,
-  addQuantity,
-  subtractQuantity,
 } from "../../store/actions/Cart";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+} from "../../store/actions/Products";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -31,15 +33,15 @@ const useStyles = makeStyles({
 const Cart = (props) => {
   const history = useHistory();
 
-  const { removeFromCart, addQuantity, subtractQuantity } = props;
+  const { removeFromCart, increaseQuantity, decreaseQuantity } = props;
 
   const classes = useStyles();
   const handleIncrease = (prod) => {
-    addQuantity(prod);
+    increaseQuantity(prod);
   };
 
   const handleDecrease = (prod) => {
-    subtractQuantity(prod);
+    decreaseQuantity(prod);
   };
 
   const handleDelete = (product) => {
@@ -135,6 +137,6 @@ const mapStateToProps = ({ CartReducer }) => {
 
 export default connect(mapStateToProps, {
   removeFromCart,
-  addQuantity,
-  subtractQuantity,
+  increaseQuantity,
+  decreaseQuantity,
 })(Cart);
