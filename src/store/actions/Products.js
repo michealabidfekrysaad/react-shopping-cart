@@ -21,15 +21,15 @@ export const ProductsDetailsReceive = (payload) => ({
     payload
 })
 
-export const decreaseQuantity = product => {
+export const decreaseQuantity = payload => {
     return {
       type: types.SUB_QUANTITY,
-      product,
+      payload,
     };
   };
-  export const increaseQuantity = product => {
+  export const increaseQuantity = payload => {
     return {
       type: types.ADD_QUANTITY,
-      product,
+      payload,
     };
   };

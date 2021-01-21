@@ -8,7 +8,7 @@ const initialState = {
 
 
 export const CartReducer = (state = initialState, action) => {
-  let product = action.product;
+  let product = action.payload;
   switch (action.type) {
     case types.ADD_TO_CART:
       let existed_item = state.products.find(

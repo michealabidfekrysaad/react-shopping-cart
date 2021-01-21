@@ -1,15 +1,15 @@
 import * as types from "../types/Cart";
 
-export const AddToCart = product => {
+export const AddToCart = payload => {
     return {
       type: types.ADD_TO_CART,
-      product
+      payload
     };
   };
-  export const removeFromCart = product => {
+  export const removeFromCart = payload => {
     return {
       type: types.REMOVE_FROM_CART,
-      product,
+      payload,
     };
   };
   export const emptyCart = () => {
