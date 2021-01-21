@@ -1,4 +1,7 @@
 import React from "react";
+import Icon from "@material-ui/core/Icon";
+import RemoveIcon from "@material-ui/icons/Remove";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import "./Navbar.scss";
@@ -48,7 +51,10 @@ const Navbar = ({
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse my-flex-box" id="navbarSupportedContent">
+      <div
+        className="collapse navbar-collapse my-flex-box"
+        id="navbarSupportedContent"
+      >
         <ul className="navbar-nav">
           <li className="nav-item active">
             <Link className="links" to="/">
@@ -61,89 +67,98 @@ const Navbar = ({
             </Link>
           </li>
         </ul>
-          <ul className="navbar-nav">
-            <li className="nav-item dropdown">
-              <Link
-                to=""
-                className="nav-link my-dropdown-toggle"
-                id="cartDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <ShoppingCart fontSize="large" />
-                <span>{total}</span>
-              </Link>
-              <div className="dropdown-menu" aria-labelledby="cartDropdown">
-                {products.length ? (
-                  <>
-                    {products.map((product) => {
-                      return (
-                        <React.Fragment key={product.id}>
-                          <p
-                            className="product-actions"
-                            onClick={() => decreaseProductQty(product)}
-                          >
-                            -
-                          </p>
-                          <img
-                            className="cart-image-in-dropdown"
-                            src={product.image}
-                            alt={product.title}
+        <ul className="navbar-nav">
+          <li className="nav-item dropdown">
+            <Link
+              to=""
+              className="nav-link my-dropdown-toggle"
+              id="cartDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <ShoppingCart fontSize="large" />
+              <span>{total}</span>
+            </Link>
+            <div className="dropdown-menu" aria-labelledby="cartDropdown">
+              {products.length ? (
+                <>
+                  {products.map((product) => {
+                    return (
+                      <React.Fragment key={product.id}>
+                        <p
+                          className="product-actions"
+                          onClick={() => decreaseProductQty(product)}
+                        >
+                          <RemoveIcon
+                            style={{ fontSize: 20 }}
+                            color="primary"
+                          ></RemoveIcon>
+                        </p>
+                        <img
+                          className="cart-image"
+                          src={product.image}
+                          alt={product.title}
+                        />
+                        with Qty: {product.qty}
+                        <p
+                          className={`product-actions`}
+                          onClick={() => increaseProductQty(product)}
+                        >
+                          <Icon style={{ fontSize: 20 }} color="primary">
+                            add_circle
+                          </Icon>
+                        </p>
+                        <p
+                          className="product-actions"
+                          onClick={() => deleteProductFromCart(product)}
+                        >
+                          <DeleteForeverIcon
+                            style={{ fontSize: 20 }}
+                            color="primary"
                           />
-                          with Qty: {product.qty}
-                          <p
-                            className="product-actions"
-                            onClick={() => increaseProductQty(product)}
-                          >
-                            +
-                          </p>
-                          <p
-                            className="product-actions"
-                            onClick={() => deleteProductFromCart(product)}
-                          >
-                            remove
-                          </p>
-                        </React.Fragment>
-                      );
-                    })}
-                    <Link to="/cart">
-                      <Btn
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                        content="Review order"
-                      />
-                    </Link>
-                  </>
-                ) : (
-                  <p>you have no product</p>
-                )}
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <Link
-                to=""
-                className="nav-link my-dropdown-toggle"
-                id="profileDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <AccountCircleIcon fontSize="large" />
+                        </p>
+                        <br/>
+                      </React.Fragment>
+                    );
+                  })}
+                  <Link to="/cart">
+                    <Btn
+                      size="small"
+                      variant="outlined"
+                      color="primary"
+                      content="Review order"
+                    />
+                  </Link>
+                </>
+              ) : (
+                <p>you have no product</p>
+              )}
+            </div>
+          </li>
+          <li className="nav-item dropdown">
+            <Link
+              to=""
+              className="nav-link my-dropdown-toggle"
+              id="profileDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <AccountCircleIcon fontSize="large" />
+            </Link>
+            <div className="dropdown-menu" aria-labelledby="profileDropdown">
+              <Link className="dropdown-item" to="">
+                View / Edit Profile
               </Link>
-              <div className="dropdown-menu" aria-labelledby="profileDropdown">
-                <Link className="dropdown-item" to="">
-                  View / Edit Profile
-                </Link>
-                <Link className="dropdown-item" to="">
-                  Sign out
-                </Link>
-              </div>
-            </li>
-          </ul>
+              <Link className="dropdown-item" to="">
+                Sign out
+              </Link>
+            </div>
+          </li>
+        </ul>
       </div>
     </nav>
   );
