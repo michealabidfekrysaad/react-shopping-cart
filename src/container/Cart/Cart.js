@@ -52,7 +52,6 @@ const Cart = ({
   };
 
   const deleteProduct = (product) => {
-    console.log(CartReducer);
     let newProducts = CartReducer.products.filter(
       (singleProduct) => singleProduct.id !== product.id
     );

@@ -51,7 +51,7 @@ const Products = (props) => {
       product.total = product.price;
       AddToCart(product);
     }
-    // history.push("/cart");
+    history.push("/cart");
   };
 
   const goToProductDetails = (prod) => {
