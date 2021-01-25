@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import Icon from "@material-ui/core/Icon";
 import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -15,13 +15,13 @@ import {
 } from "../../store/actions/Products";
 
 const Navbar = ({
-  total,
-  products,
+  // total,
+  // products,
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
+  CartReducer,
 }) => {
-
   const increaseProductQty = (product) => {
     product.qty += 1;
     product.total += product.price;
@@ -37,7 +37,12 @@ const Navbar = ({
   };
 
   const deleteProductFromCart = (product) => {
-    removeFromCart(product);
+    let newProducts = CartReducer.products.filter(
+      (singleProduct) => singleProduct.id !== product.id
+    );
+    let reduceQty = product.qty;
+    CartReducer.total -= reduceQty;
+    removeFromCart(newProducts);
   };
 
   return (
@@ -84,12 +89,16 @@ const Navbar = ({
               aria-expanded="false"
             >
               <ShoppingCart fontSize="large" />
-              <span>{total}</span>
+              <span>{CartReducer.total}</span>
             </Link>
-            <div className="dropdown-menu" aria-labelledby="cartDropdown" onClick={e => e.stopPropagation()}>
-              {products.length ? (
+            <div
+              className="dropdown-menu"
+              aria-labelledby="cartDropdown"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {CartReducer.products.length ? (
                 <>
-                  {products.map((product) => {
+                  {CartReducer.products.map((product) => {
                     return (
                       <React.Fragment key={product.id}>
                         <p
@@ -171,8 +180,9 @@ const Navbar = ({
 
 const mapStateToProps = (state) => {
   return {
-    total: state.CartReducer.total,
-    products: state.CartReducer.products,
+    // total: state.CartReducer.total,
+    // products: state.CartReducer.products,
+    CartReducer: state.CartReducer,
   };
 };
 

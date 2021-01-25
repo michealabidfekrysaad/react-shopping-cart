@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {
-  removeFromCart,
-} from "../../store/actions/Cart";
+import { removeFromCart } from "../../store/actions/Cart";
 import {
   decreaseQuantity,
   increaseQuantity,
@@ -30,14 +28,17 @@ const useStyles = makeStyles({
   },
 });
 
-const Cart = (props) => {
+const Cart = ({
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  CartReducer,
+}) => {
   const history = useHistory();
-
-  const { removeFromCart, increaseQuantity, decreaseQuantity } = props;
 
   const classes = useStyles();
   const increaseProduct = (product) => {
-    product.qty +=1;
+    product.qty += 1;
     product.total += product.price;
     increaseQuantity(product);
   };
@@ -51,13 +52,26 @@ const Cart = (props) => {
   };
 
   const deleteProduct = (product) => {
-    removeFromCart(product);
+    console.log(CartReducer);
+    let newProducts = CartReducer.products.filter(
+      (singleProduct) => singleProduct.id !== product.id
+    );
+    // totalItemInsideCart
+    let reduceQty = product.qty;
+    CartReducer.total -= reduceQty;
+    // return {
+    //   ...state,
+    //   total: state.total - reduceQty,
+    //   products: newProducts,
+    // };
+    removeFromCart(newProducts);
   };
+
   const handleSubmit = () => {
     history.push("/order");
   };
 
-  return props.products.length !== 0 ? (
+  return CartReducer.products.length !== 0 ? (
     <div className="container-fluid cart-section">
       <TableContainer component={Paper} className={classes.align}>
         <Table className={classes.table} aria-label="simple table">
@@ -72,7 +86,7 @@ const Cart = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.products.map((prod) => {
+            {CartReducer.products.map((prod) => {
               return (
                 <TableRow key={prod.id}>
                   <TableCell component="th" className="prod-cell" scope="row">
@@ -89,28 +103,28 @@ const Cart = (props) => {
                   <TableCell className="prod-total">{prod.total}</TableCell>
                   <TableCell>
                     <Btn
-                        size= "small"
-                        variant= "contained"
-                        color= "secondary"
-                        content= "-"
-                        handleClick= {() => decreaseProduct(prod)}
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      content="-"
+                      handleClick={() => decreaseProduct(prod)}
                     />
                     &nbsp;
                     <Btn
-                        size= "small"
-                        variant= "contained"
-                        color= "primary"
-                        content= "+"
-                        handleClick= {() => increaseProduct(prod)}
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      content="+"
+                      handleClick={() => increaseProduct(prod)}
                     />
                   </TableCell>
                   <TableCell>
                     <Btn
-                        size= "small"
-                        variant= "contained"
-                        color= "secondary"
-                        content= "Remove"
-                        handleClick= {() => deleteProduct(prod)}
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      content="Remove"
+                      handleClick={() => deleteProduct(prod)}
                     />
                   </TableCell>
                 </TableRow>
@@ -121,11 +135,11 @@ const Cart = (props) => {
       </TableContainer>
       <div className="submit-div">
         <Btn
-            size= "small"
-            variant= "outlined"
-            color= "default"
-            content= "Submit"
-            handleClick= {() => handleSubmit()}
+          size="small"
+          variant="outlined"
+          color="default"
+          content="Submit"
+          handleClick={() => handleSubmit()}
         />
         &nbsp;
       </div>
@@ -137,7 +151,7 @@ const Cart = (props) => {
 
 const mapStateToProps = ({ CartReducer }) => {
   return {
-    products: CartReducer.products,
+    CartReducer: CartReducer,
   };
 };
 

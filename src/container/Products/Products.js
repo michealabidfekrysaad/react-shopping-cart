@@ -33,14 +33,25 @@ const Products = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { ProductsRequest, AddToCart } = props;
+  const { ProductsRequest, AddToCart, cartProducts } = props;
   useEffect(() => {
     ProductsRequest();
   }, [ProductsRequest]);
 
   const addProdToCart = (product) => {
-    AddToCart(product);
-    history.push('/cart')
+    let existed_item = cartProducts.products.find(
+      (singleProduct) => singleProduct.id === product.id
+    );
+    if (existed_item) {
+      existed_item.qty += 1;
+      existed_item.total += existed_item.price;
+      AddToCart("");
+    } else {
+      product.qty = 1;
+      product.total = product.price;
+      AddToCart(product);
+    }
+    // history.push("/cart");
   };
 
   const goToProductDetails = (prod) => {
@@ -101,9 +112,11 @@ const Products = (props) => {
 };
 
 const mapStateToProps = (state) => {
+  // console.log(state.CartReducer);
   return {
     products: state.ProductsReducer,
     loading: state.loader,
+    cartProducts: state.CartReducer
   };
 };
 
