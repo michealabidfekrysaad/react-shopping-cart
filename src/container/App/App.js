@@ -9,6 +9,7 @@ import Navbar from "../../component/Navbar/Navbar";
 // import ProductsDetails from "../ProductDetails/ProductsDetails";
 // import Order from "../Order/Order";
 import "./App.scss";
+import Loader from "../../component/Loader/Loader";
 
 
 const Products = lazy(() => import("../Products/Products"));
@@ -22,14 +23,14 @@ const AppComp = () => {
     <Provider store={store}>
       <div>
         <Router>
-          <Suspense fallback={<div></div>}>
+          <Suspense fallback={<Loader />}>
             <main className="container-fluid">
               <Navbar />
               <section>
                 <Switch>
                   <Route path="/" exact component={Products} />
                   <Route path="/cart" component={Cart} />
-                  <Route path="/product-details" component={ProductsDetails} />
+                  <Route path="/product-details/:id" component={ProductsDetails} />
                   <Route path="/order" component={Order} />
                 </Switch>
               </section>

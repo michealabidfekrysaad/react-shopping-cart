@@ -1,13 +1,11 @@
 import { useFormik } from "formik";
 // import { connect } from "react-redux";
-// import { resetCart } from "../../store/actions/Cart";
+import { resetCart } from "../../store/actions/Cart";
 import * as Yup from "yup";
 import Input from "../../component/Input/Input";
 import "./Order.scss";
 import Btn from "../../component/Btn/Btn";
 import { useDispatch  } from "react-redux";
-import * as types from "../../store/types/Cart";
-
 
 
 const Order = () => {
@@ -23,7 +21,7 @@ const Order = () => {
     phoneNumber: Yup.string()
       .required("Required")
       .test("len", "Must be exactly 10 characters", (val) =>
-        val ? val.length === 10 : null
+        val && val.length === 10 
       ),
     email: Yup.string().email("Must be valid E-mail").required("Required"),
   });
@@ -31,9 +29,7 @@ const Order = () => {
     alert("action submitted");
     onSubmitProps.resetForm();
     // resetCart();
-    dispatch({
-      type: types.RESET_CART,
-    })
+    dispatch(resetCart())
   };
   const formik = useFormik({
     initialValues,
@@ -101,8 +97,8 @@ const Order = () => {
         <div className="row">
           <Btn
             type="submit"
-            isDisabled={!formik.dirty}
-            className={!formik.dirty ? "disabledBtn" : null}
+            isDisabled={!(formik.isValid && formik.dirty)}
+            className={!(formik.isValid && formik.dirty) ? "disabledBtn" : ""}
             content="Submit"
           />
         </div>

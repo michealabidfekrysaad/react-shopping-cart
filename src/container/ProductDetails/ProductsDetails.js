@@ -8,12 +8,10 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import "./ProductDetails.scss";
-// import { connect } from "react-redux";
-// import { ProductsDetailsRequest } from "../../store/actions/Products";
-import loader from "../../../src/assets/loader.svg";
-
-import * as typesProduct from "../../store/types/Products";
+import { ProductsDetailsRequest } from "../../store/actions/Products";
 import { useSelector, useDispatch } from "react-redux";
+import Loader from "../../component/Loader/Loader";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,25 +36,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProductsDetails = ({
-  // product,
-  history,
-  // ProductsDetailsRequest,
-  // loading,
-}) => {
+const ProductsDetails = () => {
   const product = useSelector((state) => state.ProductsReducer);
   const loading = useSelector((state) => state.loader);
   const dispatch = useDispatch();
+  const { id }= useParams();
 
-  let productH = +history.location.state;
   const classes = useStyles();
   useEffect(() => {
-    // ProductsDetailsRequest(productH);
-    dispatch({
-      type: typesProduct.GET_PRODUCTS_DETAILS_REQUEST,
-      payload: productH,
-    });
-  }, [dispatch, productH]);
+    dispatch(ProductsDetailsRequest(id));
+  }, [dispatch, id]);
 
   return (
     <div className="container-fluid">
@@ -74,7 +63,7 @@ const ProductsDetails = ({
             />
             <CardMedia
               className={classes.media}
-              image={product.image ? product.image : null}
+              image={product.image && product.image}
               title={product.title}
             />
             <CardContent>
@@ -88,11 +77,7 @@ const ProductsDetails = ({
               </Typography>
             </CardContent>
           </Card>
-        ) : loading ? (
-          <div className="loader">
-            <img src={loader} alt="My logo" />
-          </div>
-        ) : null}
+        ) : loading && ( <Loader/>)}
       </div>
     </div>
   );

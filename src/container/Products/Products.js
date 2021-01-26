@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import * as types from "../../store/types/Cart";
-import * as typesProduct from "../../store/types/Products";
 import { useSelector, useDispatch } from "react-redux";
-// import { ProductsRequest } from "../../store/actions/Products";
-// import { AddToCart } from "../../store/actions/Cart";
-// import { connect } from "react-redux";
-import loader from "../../../src/assets/loader.svg";
+import { ProductsRequest } from "../../store/actions/Products";
+import { AddToCart } from "../../store/actions/Cart";
 import { useHistory } from "react-router-dom";
 
 import Product from "../../component/Product/Product";
@@ -14,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Btn from "../../component/Btn/Btn";
 import Pagination from "../../component/Pagination/Pagination";
+import Loader from "../../component/Loader/Loader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,9 +47,7 @@ const Products = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch({
-      type: typesProduct.GET_PRODUCTS_REQUEST,
-    });
+    dispatch(ProductsRequest());
   }, [dispatch]);
 
   let currentProducts = 0;
@@ -67,17 +62,12 @@ const Products = (props) => {
       existed_item.qty += 1;
       existed_item.total += existed_item.price;
       // AddToCart("");
-      dispatch({
-        type: types.ADD_TO_CART,
-      });
+      dispatch(AddToCart(""));
     } else {
       product.qty = 1;
       product.total = product.price;
       // AddToCart(product);
-      dispatch({
-        type: types.ADD_TO_CART,
-        payload: product,
-      });
+      dispatch(AddToCart(product));
     }
     history.push("/cart");
   };
@@ -93,53 +83,51 @@ const Products = (props) => {
     <div className={classes.root}>
       <Grid container spacing={1}>
         <Grid container item xs={12} spacing={3}>
-          {currentProducts.length ? (
-            currentProducts.map(({ id, title, description, image, price }) => {
-              return (
-                <Grid item xs={3} key={id}>
-                  <Paper className={classes.paper}>
-                    <Product
-                      cardInfo={{
-                        id,
-                        image,
-                        title,
-                        description,
-                        price,
-                        addProdToCart,
-                      }}
-                    />
-                    <hr />
-                    <Btn
-                      size="small"
-                      variant="outlined"
-                      color="secondary"
-                      content="Details"
-                      handleClick={() =>
-                        goToProductDetails({
-                          id,
-                          title,
-                          description,
-                          image,
-                          price,
-                        })
-                      }
-                    />
-                  </Paper>
-                </Grid>
-              );
-            })
-          ) : loading ? (
-            <div className="loader">
-              <img src={loader} alt="My logo" />
-            </div>
-          ) : null}
+          {currentProducts.length
+            ? currentProducts.map(
+                ({ id, title, description, image, price }) => {
+                  return (
+                    <Grid item xs={3} key={id}>
+                      <Paper className={classes.paper}>
+                        <Product
+                          cardInfo={{
+                            id,
+                            image,
+                            title,
+                            description,
+                            price,
+                            addProdToCart,
+                          }}
+                        />
+                        <hr />
+                        <Btn
+                          size="small"
+                          variant="outlined"
+                          color="secondary"
+                          content="Details"
+                          handleClick={() =>
+                            goToProductDetails({
+                              id,
+                              title,
+                              description,
+                              image,
+                              price,
+                            })
+                          }
+                        />
+                      </Paper>
+                    </Grid>
+                  );
+                }
+              )
+            : loading && <Loader />}
           {products.length && (
             <div className="container-fluid-pagination">
-            <Pagination
-              productsPerPage={4}
-              totalProducts={products.length}
-              paginate={paginate}
-            />
+              <Pagination
+                productsPerPage={4}
+                totalProducts={products.length}
+                paginate={paginate}
+              />
             </div>
           )}
         </Grid>

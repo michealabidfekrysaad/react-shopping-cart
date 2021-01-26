@@ -1,11 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-// import { connect } from "react-redux";
-// import { removeFromCart } from "../../store/actions/Cart";
-// import {
-//   decreaseQuantity,
-//   increaseQuantity,
-// } from "../../store/actions/Products";
+import { removeFromCart } from "../../store/actions/Cart";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+} from "../../store/actions/Products";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -16,10 +15,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Btn from "../../component/Btn/Btn";
-import { useSelector, useDispatch  } from "react-redux";
-import * as types from "../../store/types/Cart";
-import * as typesProduct from "../../store/types/Products";
+import { useSelector, useDispatch } from "react-redux";
 import "./Cart.scss";
+import { decreaseQuantityCart, increaseQuantityCart } from "../../utils/shared";
 
 const useStyles = makeStyles({
   table: {
@@ -37,44 +35,25 @@ const Cart = () => {
 
   const classes = useStyles();
   const increaseProduct = (product) => {
-    product.qty += 1;
-    product.total += product.price;
-    // increaseQuantity(product);
-    dispatch({
-      type: typesProduct.ADD_QUANTITY,
-      payload: product
-    })
+    dispatch(increaseQuantity(increaseQuantityCart(product)));
   };
 
   const decreaseProduct = (product) => {
     if (product.qty !== 1) {
-      product.qty -= 1;
-      product.total = product.qty * product.price;
-      // decreaseQuantity(product);
-      dispatch({
-        type: typesProduct.SUB_QUANTITY,
-        payload: product
-      })
+      dispatch(decreaseQuantity(decreaseQuantityCart(product)));
     }
   };
 
   const deleteProduct = (product) => {
+    // ana hena 3ashan a3mel function fe  el shared.js file
+    // lazem a3mel henak  import lel CartReducer 3ashan keda ana sayebha hena
+    // wala fe fekra tania ???
     let newProducts = CartReducer.products.filter(
       (singleProduct) => singleProduct.id !== product.id
     );
-    // totalItemInsideCart
     let reduceQty = product.qty;
     CartReducer.total -= reduceQty;
-    // return {
-    //   ...state,
-    //   total: state.total - reduceQty,
-    //   products: newProducts,
-    // };
-    // removeFromCart(newProducts);
-    dispatch({
-      type: types.REMOVE_FROM_CART,
-      payload: newProducts
-    })
+    dispatch(removeFromCart(newProducts));
   };
 
   const handleSubmit = () => {
@@ -91,8 +70,8 @@ const Cart = () => {
               <TableCell>title</TableCell>
               <TableCell>Qty</TableCell>
               <TableCell>Total</TableCell>
-              <TableCell>&nbsp;</TableCell>
-              <TableCell>&nbsp;</TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -158,17 +137,5 @@ const Cart = () => {
     <div>You have no products go add to cart</div>
   );
 };
-
-// const mapStateToProps = ({ CartReducer }) => {
-//   return {
-//     // CartReducer: CartReducer,
-//   };
-// };
-
-// export default connect(mapStateToProps, {
-//   // removeFromCart,
-//   // increaseQuantity,
-//   // decreaseQuantity,
-// })(Cart);
 
 export default Cart;

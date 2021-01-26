@@ -7,46 +7,27 @@ import "./Navbar.scss";
 import { Home, ShoppingCart } from "@material-ui/icons";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Btn from "../Btn/Btn";
-// import { connect } from "react-redux";
-// import { removeFromCart } from "../../store/actions/Cart";
-// import {
-//   decreaseQuantity,
-//   increaseQuantity,
-// } from "../../store/actions/Products";
+import { removeFromCart } from "../../store/actions/Cart";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+} from "../../store/actions/Products";
 import { useSelector, useDispatch  } from "react-redux";
-import * as types from "../../store/types/Cart";
-import * as typesProduct from "../../store/types/Products";
+import { increaseQuantityCart, decreaseQuantityCart } from "../../utils/shared";
 
 
-// {
-//   // removeFromCart,
-//   // increaseQuantity,
-//   // decreaseQuantity,
-// }
 const Navbar = () => {
 
   const CartReducer = useSelector((state) => state.CartReducer);
   const dispatch = useDispatch();
 
   const increaseProductQty = (product) => {
-    product.qty += 1;
-    product.total += product.price;
-    // increaseQuantity(product);
-    dispatch({
-      type: typesProduct.ADD_QUANTITY,
-      payload: product
-    })
+    dispatch(increaseQuantity(increaseQuantityCart(product)))
   };
 
   const decreaseProductQty = (product) => {
     if (product.qty !== 1) {
-      product.qty -= 1;
-      product.total = product.qty * product.price;
-      // decreaseQuantity(product);
-      dispatch({
-        type: typesProduct.SUB_QUANTITY,
-        payload: product
-      })
+      dispatch(decreaseQuantity(decreaseQuantityCart(product)))
     }
   };
 
@@ -57,10 +38,7 @@ const Navbar = () => {
     let reduceQty = product.qty;
     CartReducer.total -= reduceQty;
     // removeFromCart(newProducts);
-    dispatch({
-      type: types.REMOVE_FROM_CART,
-      payload: newProducts
-    })
+    dispatch(removeFromCart(newProducts))
   };
 
   return (
