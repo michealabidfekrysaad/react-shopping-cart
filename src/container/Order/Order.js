@@ -1,12 +1,18 @@
 import { useFormik } from "formik";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+// import { resetCart } from "../../store/actions/Cart";
 import * as Yup from "yup";
 import Input from "../../component/Input/Input";
 import "./Order.scss";
-import { resetCart } from "../../store/actions/Cart";
 import Btn from "../../component/Btn/Btn";
+import { useDispatch  } from "react-redux";
+import * as types from "../../store/types/Cart";
 
-const Order = ({ resetCart }) => {
+
+
+const Order = () => {
+  const dispatch = useDispatch();
+
   const initialValues = {
     address: "",
     phoneNumber: "",
@@ -24,7 +30,10 @@ const Order = ({ resetCart }) => {
   const onSubmit = (values, onSubmitProps) => {
     alert("action submitted");
     onSubmitProps.resetForm();
-    resetCart();
+    // resetCart();
+    dispatch({
+      type: types.RESET_CART,
+    })
   };
   const formik = useFormik({
     initialValues,
@@ -102,4 +111,5 @@ const Order = ({ resetCart }) => {
   );
 };
 
-export default connect(null, { resetCart })(Order);
+// export default connect(null, { resetCart })(Order);
+export default Order;

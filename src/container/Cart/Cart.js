@@ -1,11 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { removeFromCart } from "../../store/actions/Cart";
-import {
-  decreaseQuantity,
-  increaseQuantity,
-} from "../../store/actions/Products";
+// import { connect } from "react-redux";
+// import { removeFromCart } from "../../store/actions/Cart";
+// import {
+//   decreaseQuantity,
+//   increaseQuantity,
+// } from "../../store/actions/Products";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -16,7 +16,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Btn from "../../component/Btn/Btn";
-
+import { useSelector, useDispatch  } from "react-redux";
+import * as types from "../../store/types/Cart";
+import * as typesProduct from "../../store/types/Products";
 import "./Cart.scss";
 
 const useStyles = makeStyles({
@@ -28,26 +30,31 @@ const useStyles = makeStyles({
   },
 });
 
-const Cart = ({
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-  CartReducer,
-}) => {
+const Cart = () => {
   const history = useHistory();
+  const CartReducer = useSelector((state) => state.CartReducer);
+  const dispatch = useDispatch();
 
   const classes = useStyles();
   const increaseProduct = (product) => {
     product.qty += 1;
     product.total += product.price;
-    increaseQuantity(product);
+    // increaseQuantity(product);
+    dispatch({
+      type: typesProduct.ADD_QUANTITY,
+      payload: product
+    })
   };
 
   const decreaseProduct = (product) => {
     if (product.qty !== 1) {
       product.qty -= 1;
       product.total = product.qty * product.price;
-      decreaseQuantity(product);
+      // decreaseQuantity(product);
+      dispatch({
+        type: typesProduct.SUB_QUANTITY,
+        payload: product
+      })
     }
   };
 
@@ -63,7 +70,11 @@ const Cart = ({
     //   total: state.total - reduceQty,
     //   products: newProducts,
     // };
-    removeFromCart(newProducts);
+    // removeFromCart(newProducts);
+    dispatch({
+      type: types.REMOVE_FROM_CART,
+      payload: newProducts
+    })
   };
 
   const handleSubmit = () => {
@@ -148,14 +159,16 @@ const Cart = ({
   );
 };
 
-const mapStateToProps = ({ CartReducer }) => {
-  return {
-    CartReducer: CartReducer,
-  };
-};
+// const mapStateToProps = ({ CartReducer }) => {
+//   return {
+//     // CartReducer: CartReducer,
+//   };
+// };
 
-export default connect(mapStateToProps, {
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-})(Cart);
+// export default connect(mapStateToProps, {
+//   // removeFromCart,
+//   // increaseQuantity,
+//   // decreaseQuantity,
+// })(Cart);
+
+export default Cart;

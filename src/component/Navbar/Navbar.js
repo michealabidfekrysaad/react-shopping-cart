@@ -2,37 +2,51 @@ import React from "react";
 import Icon from "@material-ui/core/Icon";
 import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 import { Home, ShoppingCart } from "@material-ui/icons";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Btn from "../Btn/Btn";
-import { removeFromCart } from "../../store/actions/Cart";
-import {
-  decreaseQuantity,
-  increaseQuantity,
-} from "../../store/actions/Products";
+// import { connect } from "react-redux";
+// import { removeFromCart } from "../../store/actions/Cart";
+// import {
+//   decreaseQuantity,
+//   increaseQuantity,
+// } from "../../store/actions/Products";
+import { useSelector, useDispatch  } from "react-redux";
+import * as types from "../../store/types/Cart";
+import * as typesProduct from "../../store/types/Products";
 
-const Navbar = ({
-  // total,
-  // products,
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-  CartReducer,
-}) => {
+
+// {
+//   // removeFromCart,
+//   // increaseQuantity,
+//   // decreaseQuantity,
+// }
+const Navbar = () => {
+
+  const CartReducer = useSelector((state) => state.CartReducer);
+  const dispatch = useDispatch();
+
   const increaseProductQty = (product) => {
     product.qty += 1;
     product.total += product.price;
-    increaseQuantity(product);
+    // increaseQuantity(product);
+    dispatch({
+      type: typesProduct.ADD_QUANTITY,
+      payload: product
+    })
   };
 
   const decreaseProductQty = (product) => {
     if (product.qty !== 1) {
       product.qty -= 1;
       product.total = product.qty * product.price;
-      decreaseQuantity(product);
+      // decreaseQuantity(product);
+      dispatch({
+        type: typesProduct.SUB_QUANTITY,
+        payload: product
+      })
     }
   };
 
@@ -42,7 +56,11 @@ const Navbar = ({
     );
     let reduceQty = product.qty;
     CartReducer.total -= reduceQty;
-    removeFromCart(newProducts);
+    // removeFromCart(newProducts);
+    dispatch({
+      type: types.REMOVE_FROM_CART,
+      payload: newProducts
+    })
   };
 
   return (
@@ -178,16 +196,18 @@ const Navbar = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    // total: state.CartReducer.total,
-    // products: state.CartReducer.products,
-    CartReducer: state.CartReducer,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     // total: state.CartReducer.total,
+//     // products: state.CartReducer.products,
+//     // CartReducer: state.CartReducer,
+//   };
+// };
 
-export default connect(mapStateToProps, {
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-})(Navbar);
+// export default connect(null, {
+//   // removeFromCart,
+//   // increaseQuantity,
+//   // decreaseQuantity,
+// })(Navbar);
+
+ export default Navbar;

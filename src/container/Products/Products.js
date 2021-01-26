@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
-import { ProductsRequest } from "../../store/actions/Products";
-import { AddToCart } from "../../store/actions/Cart";
+import * as types from "../../store/types/Cart";
+import * as typesProduct from "../../store/types/Products";
+import { useSelector, useDispatch  } from "react-redux";
+// import { ProductsRequest } from "../../store/actions/Products";
+// import { AddToCart } from "../../store/actions/Cart";
+// import { connect } from "react-redux";
 import loader from "../../../src/assets/loader.svg";
 import { useHistory } from "react-router-dom";
 
 import Product from "../../component/Product/Product";
-import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -30,13 +33,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Products = (props) => {
+  const products = useSelector((state) => state.ProductsReducer);
+  const loading = useSelector((state) => state.loader);
+  const cartProducts = useSelector((state) => state.CartReducer);
+  const dispatch = useDispatch();
+
   const classes = useStyles();
   const history = useHistory();
 
-  const { ProductsRequest, AddToCart, cartProducts } = props;
   useEffect(() => {
-    ProductsRequest();
-  }, [ProductsRequest]);
+    dispatch({
+      type: typesProduct.GET_PRODUCTS_REQUEST,
+    })
+  }, [dispatch]);
 
   const addProdToCart = (product) => {
     let existed_item = cartProducts.products.find(
@@ -45,11 +54,18 @@ const Products = (props) => {
     if (existed_item) {
       existed_item.qty += 1;
       existed_item.total += existed_item.price;
-      AddToCart("");
+      // AddToCart("");
+      dispatch({
+        type: types.ADD_TO_CART,
+      })
     } else {
       product.qty = 1;
       product.total = product.price;
-      AddToCart(product);
+      // AddToCart(product);
+      dispatch({
+        type: types.ADD_TO_CART,
+        payload: product
+      })
     }
     history.push("/cart");
   };
@@ -65,8 +81,8 @@ const Products = (props) => {
     <div className={classes.root}>
       <Grid container spacing={1}>
         <Grid container item xs={12} spacing={3}>
-          {props.products.length ? (
-            props.products.map(({ id, title, description, image, price }) => {
+          {products.length ? (
+            products.map(({ id, title, description, image, price }) => {
               return (
                 <Grid item xs={3} key={id}>
                   <Paper className={classes.paper}>
@@ -100,7 +116,7 @@ const Products = (props) => {
                 </Grid>
               );
             })
-          ) : props.loading ? (
+          ) : loading ? (
             <div className="loader">
               <img src={loader} alt="My logo" />
             </div>
@@ -111,16 +127,17 @@ const Products = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  // console.log(state.CartReducer);
-  return {
-    products: state.ProductsReducer,
-    loading: state.loader,
-    cartProducts: state.CartReducer
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     // products: state.ProductsReducer,
+//     // loading: state.loader,
+//     // cartProducts: state.CartReducer,
+//   };
+// };
 
-export default connect(mapStateToProps, {
-  ProductsRequest,
-  AddToCart,
-})(Products);
+// export default connect(null, {
+//   ProductsRequest,
+//   AddToCart,
+// })(Products);
+
+export default Products;

@@ -8,8 +8,12 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import "./ProductDetails.scss";
-import { connect } from "react-redux";
-import { ProductsDetailsRequest } from "../../store/actions/Products";
+// import { connect } from "react-redux";
+// import { ProductsDetailsRequest } from "../../store/actions/Products";
+import loader from "../../../src/assets/loader.svg";
+
+import * as typesProduct from "../../store/types/Products";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,16 +39,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProductsDetails = ({
-  product,
+  // product,
   history,
-  ProductsDetailsRequest,
-  loading,
+  // ProductsDetailsRequest,
+  // loading,
 }) => {
+  const product = useSelector((state) => state.ProductsReducer);
+  const loading = useSelector((state) => state.loader);
+  const dispatch = useDispatch();
+
   let productH = +history.location.state;
   const classes = useStyles();
   useEffect(() => {
-    ProductsDetailsRequest(productH);
-  }, [ProductsDetailsRequest]);
+    // ProductsDetailsRequest(productH);
+    dispatch({
+      type: typesProduct.GET_PRODUCTS_DETAILS_REQUEST,
+      payload: productH,
+    });
+  }, [dispatch, productH]);
 
   return (
     <div className="container-fluid">
@@ -76,19 +88,26 @@ const ProductsDetails = ({
               </Typography>
             </CardContent>
           </Card>
+        ) : loading ? (
+          <div className="loader">
+            <img src={loader} alt="My logo" />
+          </div>
         ) : null}
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    product: state.ProductsReducer,
-    // loading: state.loader,
-  };
-};
+// const mapStateToProps = (state) => {
+//   // console.log(state);
+//   return {
+//     // product: state.ProductsReducer,
+//     // loading: state.loader,
+//   };
+// };
 
-export default connect(mapStateToProps, { ProductsDetailsRequest })(
-  ProductsDetails
-);
+// export default connect(mapStateToProps, { ProductsDetailsRequest })(
+//   ProductsDetails
+// );
+
+export default ProductsDetails;

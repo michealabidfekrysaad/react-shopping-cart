@@ -5,7 +5,7 @@ export const getProducts = async () => {
 };
 
 export const getProductDetails = async (params) => {
-  return await axiosInstance.get(`/products/${params}`, { handlerEnabled: false });
+  return await axiosInstance.get(`/products/${params}`, { handlerEnabled: true });
 };
 
  
