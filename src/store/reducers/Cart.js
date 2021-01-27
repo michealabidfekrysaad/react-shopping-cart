@@ -11,27 +11,7 @@ export const CartReducer = (state = initialState, action) => {
   let product = action.payload;
   switch (action.type) {
     case types.ADD_TO_CART:
-      // let existed_item = state.products.find(
-      //   (singleProduct) => singleProduct.id === product.id
-      // );
-      // if (existed_item) {
-      //   existed_item.qty += 1;
-      //   existed_item.total += existed_item.price;
-      //   return {
-      //     ...state,
-      //     total: state.total + 1,
-      //     products: [...state.products],
-      //   };
-      // } else {
-      //   product.qty = 1;
-      //   product.total = product.price;
-      //   return {
-      //     ...state,
-      //     total: state.total + 1,
-      //     products: [...state.products, product],
-      //   };
-      // }
-      // console.log(product);
+
       if (product) {
         return {
           ...state,

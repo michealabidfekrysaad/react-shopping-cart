@@ -7,15 +7,15 @@ const Pagination = ({ productsPerPage, totalProducts, paginate }) => {
     pageNumbers.push(i);
   }
   return (
-    <nav>
-      <ul className="pagination">
+    <main>
+      <ul className="my-pagination">
         {pageNumbers.map((number) => {
           return (
-            <li key={number} className="page-item">
+            <li key={number}>
               <Link
                 to=""
                 onClick={() => paginate(number)}
-                className="page-link"
+                className="my-page-link"
               >
                 {number}
               </Link>
@@ -23,7 +23,7 @@ const Pagination = ({ productsPerPage, totalProducts, paginate }) => {
           );
         })}
       </ul>
-    </nav>
+    </main>
   );
 };
 
