@@ -6,10 +6,12 @@ import Input from "../../component/Input/Input";
 import "./Order.scss";
 import Btn from "../../component/Btn/Btn";
 import { useDispatch  } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 
 const Order = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const initialValues = {
     address: "",
@@ -28,8 +30,8 @@ const Order = () => {
   const onSubmit = (values, onSubmitProps) => {
     alert("action submitted");
     onSubmitProps.resetForm();
-    // resetCart();
     dispatch(resetCart())
+    history.push("/");
   };
   const formik = useFormik({
     initialValues,

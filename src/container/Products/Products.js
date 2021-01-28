@@ -69,7 +69,7 @@ const Products = (props) => {
       // AddToCart(product);
       dispatch(AddToCart(product));
     }
-    history.push("/cart");
+      history.push("/cart");
   };
 
   const goToProductDetails = (prod) => {
@@ -135,18 +135,5 @@ const Products = (props) => {
     </div>
   );
 };
-
-// const mapStateToProps = (state) => {
-//   return {
-//     // products: state.ProductsReducer,
-//     // loading: state.loader,
-//     // cartProducts: state.CartReducer,
-//   };
-// };
-
-// export default connect(null, {
-//   ProductsRequest,
-//   AddToCart,
-// })(Products);
 
 export default Products;

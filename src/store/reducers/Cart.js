@@ -1,5 +1,5 @@
 import * as types from "../types/Cart";
-import * as typesProduct from "../types/Products";
+// import * as typesProduct from "../types/Products";
 
 const initialState = {
   products: [],
@@ -27,24 +27,19 @@ export const CartReducer = (state = initialState, action) => {
       }
 
     case types.REMOVE_FROM_CART:
-      // let newProducts = state.products.filter(
-      //   (singleProduct) => singleProduct.id !== product.id
-      // );
-
-      // let reduceQty = product.qty;
       return {
         ...state,
         products: product,
       };
 
-    case typesProduct.ADD_QUANTITY:
+    case types.ADD_QUANTITY:
       return {
         ...state,
         total: state.total + 1,
         products: [...state.products],
       };
 
-    case typesProduct.SUB_QUANTITY:
+    case types.SUB_QUANTITY:
       return {
         ...state,
         total: state.total - 1,

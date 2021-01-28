@@ -2,24 +2,26 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import Badge from "@material-ui/core/Badge";
 
 import { Link } from "react-router-dom";
 import { Home, ShoppingCart } from "@material-ui/icons";
+// import {
+//   decreaseQuantity,
+//   increaseQuantity,
+// } from "../../store/actions/Products";
+import { useSelector, useDispatch } from "react-redux";
+import { IncreaseQuantityCart, decreaseQuantityCart } from "../../utils/shared";
 import {
+  removeFromCart,
   decreaseQuantity,
   increaseQuantity,
-} from "../../store/actions/Products";
-import { useSelector, useDispatch } from "react-redux";
-import { increaseQuantityCart, decreaseQuantityCart } from "../../utils/shared";
-import { removeFromCart } from "../../store/actions/Cart";
+} from "../../store/actions/Cart";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Icon from "@material-ui/core/Icon";
 import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Dropdown from "../Dropdown/Dropddown";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,9 +49,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   sectionDesktop: {
-    display: "none",
+    display: "flex",
     [theme.breakpoints.down("xl")]: {
-      display: "block",
+      display: "flex",
     },
   },
 }));
@@ -59,7 +61,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const increaseProductQty = (product) => {
-    dispatch(increaseQuantity(increaseQuantityCart(product)));
+    dispatch(increaseQuantity(IncreaseQuantityCart(product)));
   };
 
   const decreaseProductQty = (product) => {
@@ -78,25 +80,6 @@ const Navbar = () => {
   };
 
   const classes = useStyles();
-
-  const [open, setOpen] = React.useState(false);
-  const [openProfile, setOpenProfile] = React.useState(false);
-
-  const handleClickCart = () => {
-    setOpen((prev) => !prev);
-  };
-
-  const handleClickAwayCart = () => {
-    setOpen(false);
-  };
-
-  const handleClick = () => {
-    setOpenProfile((prev) => !prev);
-  };
-
-  const handleClickAway = () => {
-    setOpenProfile(false);
-  };
 
   return (
     <div className={classes.grow}>
@@ -119,77 +102,69 @@ const Navbar = () => {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <ClickAwayListener onClickAway={handleClickAwayCart}>
-              <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={CartReducer.total} color="secondary">
-                  <ShoppingCart fontSize="large" onClick={handleClickCart} />
-                  {open && CartReducer.products.length && (
-                    <div className={classes.dropdown}>
-                      {CartReducer.products.map((product) => {
-                        return (
-                          <React.Fragment key={product.id}>
-                            <p
-                              className="product-actions"
-                              onClick={() => decreaseProductQty(product)}
-                            >
-                              <RemoveIcon
-                                style={{ fontSize: 20 }}
-                                color="primary"
-                              ></RemoveIcon>
-                            </p>
-                            <img
-                              className="cart-image"
-                              src={product.image}
-                              alt={product.title}
-                            />
-                            with Qty: {product.qty}
-                            <p
-                              className={`product-actions`}
-                              onClick={() => increaseProductQty(product)}
-                            >
-                              <Icon style={{ fontSize: 20 }} color="primary">
-                                add_circle
-                              </Icon>
-                            </p>
-                            <p
-                              className="product-actions"
-                              onClick={() => deleteProductFromCart(product)}
-                            >
-                              <DeleteForeverIcon
-                                style={{ fontSize: 20 }}
-                                color="primary"
-                              />
-                            </p>
-                            <br />
-                          </React.Fragment>
-                        );
-                      })}
-                      <Link to="/cart">Review Order</Link>
-                    </div>
-                  )}
-                </Badge>
-              </IconButton>
-            </ClickAwayListener>
-            <ClickAwayListener onClickAway={handleClickAway}>
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
-                onClick={handleClick}
-              >
-                <AccountCircleIcon fontSize="large" />
-                {openProfile ? (
-                  <div className={classes.dropdown}>
-                    <Link className="dropdown-item" to="">
-                      View / Edit Profile
-                    </Link>
-                    <br />
-                    <Link className="dropdown-item" to="">
-                      Sign out
-                    </Link>
-                  </div>
-                ) : null}
-              </IconButton>
-            </ClickAwayListener>
+            <Dropdown
+              badgeContent={CartReducer.total}
+              screenAppear={<ShoppingCart fontSize="large" />}
+              DropdownBody={
+                CartReducer.products.length !== 0 ? (
+                  CartReducer.products.map((product) => {
+                    return (
+                      <React.Fragment key={product.id}>
+                        <p
+                          className="product-actions"
+                          onClick={() => decreaseProductQty(product)}
+                        >
+                          <RemoveIcon
+                            style={{ fontSize: 20 }}
+                            color="primary"
+                          ></RemoveIcon>
+                        </p>
+                        <img
+                          className="cart-image"
+                          src={product.image}
+                          alt={product.title}
+                        />
+                        with Qty: {product.qty}
+                        <p
+                          className={`product-actions`}
+                          onClick={() => increaseProductQty(product)}
+                        >
+                          <Icon style={{ fontSize: 20 }} color="primary">
+                            add_circle
+                          </Icon>
+                        </p>
+                        <p
+                          className="product-actions"
+                          onClick={() => deleteProductFromCart(product)}
+                        >
+                          <DeleteForeverIcon
+                            style={{ fontSize: 20 }}
+                            color="primary"
+                          />
+                        </p>
+                        <br />
+                      </React.Fragment>
+                    );
+                  })
+                ) : (
+                  <p>no product added</p>
+                )
+              }
+            />
+            <Dropdown
+              screenAppear={<AccountCircleIcon fontSize="large" />}
+              DropdownBody={
+                <>
+                  <Link className="dropdown-item" to="">
+                    View / Edit Profile
+                  </Link>
+                  <br />
+                  <Link className="dropdown-item" to="">
+                    Sign out
+                  </Link>
+                </>
+              }
+            />
           </div>
         </Toolbar>
       </AppBar>

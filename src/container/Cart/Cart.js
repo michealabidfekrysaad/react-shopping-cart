@@ -1,11 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { removeFromCart } from "../../store/actions/Cart";
 import {
+  removeFromCart,
   decreaseQuantity,
   increaseQuantity,
-} from "../../store/actions/Products";
-
+} from "../../store/actions/Cart";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -17,7 +16,7 @@ import Paper from "@material-ui/core/Paper";
 import Btn from "../../component/Btn/Btn";
 import { useSelector, useDispatch } from "react-redux";
 import "./Cart.scss";
-import { decreaseQuantityCart, increaseQuantityCart } from "../../utils/shared";
+import { decreaseQuantityCart, IncreaseQuantityCart } from "../../utils/shared";
 
 const useStyles = makeStyles({
   table: {
@@ -35,7 +34,7 @@ const Cart = () => {
 
   const classes = useStyles();
   const increaseProduct = (product) => {
-    dispatch(increaseQuantity(increaseQuantityCart(product)));
+    dispatch(increaseQuantity(IncreaseQuantityCart(product)));
   };
 
   const decreaseProduct = (product) => {

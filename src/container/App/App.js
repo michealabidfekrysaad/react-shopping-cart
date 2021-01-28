@@ -4,10 +4,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import store from "../../store/Index";
 import Navbar from "../../component/Navbar/Navbar";
-// import Products from "../Products/Products";
-// import Cart from "../Cart/Cart";
-// import ProductsDetails from "../ProductDetails/ProductsDetails";
-// import Order from "../Order/Order";
 import "./App.scss";
 import Loader from "../../component/Loader/Loader";
 
