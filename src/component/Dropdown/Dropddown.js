@@ -16,15 +16,15 @@ const useStyles = makeStyles((theme) => ({
   },
   dropdown: {
     position: "absolute",
-    top: 33,
-    left: -389,
+    top: 40,
+    left: -285,
     right: 0,
     border: "1px solid",
     padding: 8,
     zIndex: 1,
     backgroundColor: "#fff",
     color: "black",
-    width: 400,
+    width: 300,
   },
 }));
 

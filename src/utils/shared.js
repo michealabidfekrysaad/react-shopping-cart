@@ -1,9 +1,3 @@
-import { useSelector, useDispatch } from "react-redux";
-import {
-  decreaseQuantity,
-  increaseQuantity,
-} from "../store/actions/Products";
-
 
 export const IncreaseQuantityCart = (product) => {
   product.qty += 1;
