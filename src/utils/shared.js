@@ -1,6 +1,7 @@
 import {
   decreaseQuantity,
   increaseQuantity,
+  removeFromCart,
 } from "../store/actions/Cart";
 import store from "../store/Index";
 
@@ -17,5 +18,11 @@ export const decreaseQuantityCart = (product) => {
 };
 
 export const deleteProductCart = (product) => {
-  return product;
+  let { CartReducer } = store.getState();
+  let newProducts = CartReducer.products.filter(
+    (singleProduct) => singleProduct.id !== product.id
+  );
+  let reduceQty = product.qty;
+  CartReducer.total -= reduceQty;
+  store.dispatch(removeFromCart(newProducts));
 };

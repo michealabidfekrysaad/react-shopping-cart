@@ -1,10 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import {
-  removeFromCart,
-  // decreaseQuantity,
-  // increaseQuantity,
-} from "../../store/actions/Cart";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -14,9 +9,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Btn from "../../component/Btn/Btn";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import "./Cart.scss";
-import { decreaseQuantityCart, IncreaseQuantityCart } from "../../utils/shared";
+import { decreaseQuantityCart, IncreaseQuantityCart, deleteProductCart } from "../../utils/shared";
 
 const useStyles = makeStyles({
   table: {
@@ -30,7 +25,6 @@ const useStyles = makeStyles({
 const Cart = () => {
   const history = useHistory();
   const CartReducer = useSelector((state) => state.CartReducer);
-  const dispatch = useDispatch();
 
   const classes = useStyles();
   const increaseProduct = (product) => {
@@ -44,15 +38,7 @@ const Cart = () => {
   };
 
   const deleteProduct = (product) => {
-    // ana hena 3ashan a3mel function fe  el shared.js file
-    // lazem a3mel henak  import lel CartReducer 3ashan keda ana sayebha hena
-    // wala fe fekra tania ???
-    let newProducts = CartReducer.products.filter(
-      (singleProduct) => singleProduct.id !== product.id
-    );
-    let reduceQty = product.qty;
-    CartReducer.total -= reduceQty;
-    dispatch(removeFromCart(newProducts));
+    deleteProductCart(product)
   };
 
   const handleSubmit = () => {

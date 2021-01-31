@@ -6,13 +6,8 @@ import Typography from "@material-ui/core/Typography";
 
 import { Link } from "react-router-dom";
 import { Home, ShoppingCart } from "@material-ui/icons";
-import { useSelector, useDispatch } from "react-redux";
-import { IncreaseQuantityCart, decreaseQuantityCart } from "../../utils/shared";
-import {
-  removeFromCart,
-  // decreaseQuantity,
-  // increaseQuantity,
-} from "../../store/actions/Cart";
+import { useSelector } from "react-redux";
+import { IncreaseQuantityCart, decreaseQuantityCart,  deleteProductCart } from "../../utils/shared";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Icon from "@material-ui/core/Icon";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -54,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const CartReducer = useSelector((state) => state.CartReducer);
-  const dispatch = useDispatch();
 
   const increaseProductQty = (product) => {
     IncreaseQuantityCart(product);
@@ -67,12 +61,8 @@ const Navbar = () => {
   };
 
   const deleteProductFromCart = (product) => {
-    let newProducts = CartReducer.products.filter(
-      (singleProduct) => singleProduct.id !== product.id
-    );
-    let reduceQty = product.qty;
-    CartReducer.total -= reduceQty;
-    dispatch(removeFromCart(newProducts));
+    deleteProductCart(product)
+
   };
 
   const classes = useStyles();
