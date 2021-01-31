@@ -2,8 +2,8 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import {
   removeFromCart,
-  decreaseQuantity,
-  increaseQuantity,
+  // decreaseQuantity,
+  // increaseQuantity,
 } from "../../store/actions/Cart";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -34,12 +34,12 @@ const Cart = () => {
 
   const classes = useStyles();
   const increaseProduct = (product) => {
-    dispatch(increaseQuantity(IncreaseQuantityCart(product)));
+    IncreaseQuantityCart(product);
   };
 
   const decreaseProduct = (product) => {
     if (product.qty !== 1) {
-      dispatch(decreaseQuantity(decreaseQuantityCart(product)));
+      decreaseQuantityCart(product);
     }
   };
 

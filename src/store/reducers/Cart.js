@@ -11,7 +11,6 @@ export const CartReducer = (state = initialState, action) => {
   let product = action.payload;
   switch (action.type) {
     case types.ADD_TO_CART:
-
       if (product) {
         return {
           ...state,

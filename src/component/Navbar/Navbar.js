@@ -6,16 +6,12 @@ import Typography from "@material-ui/core/Typography";
 
 import { Link } from "react-router-dom";
 import { Home, ShoppingCart } from "@material-ui/icons";
-// import {
-//   decreaseQuantity,
-//   increaseQuantity,
-// } from "../../store/actions/Products";
 import { useSelector, useDispatch } from "react-redux";
 import { IncreaseQuantityCart, decreaseQuantityCart } from "../../utils/shared";
 import {
   removeFromCart,
-  decreaseQuantity,
-  increaseQuantity,
+  // decreaseQuantity,
+  // increaseQuantity,
 } from "../../store/actions/Cart";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Icon from "@material-ui/core/Icon";
@@ -61,12 +57,12 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const increaseProductQty = (product) => {
-    dispatch(increaseQuantity(IncreaseQuantityCart(product)));
+    IncreaseQuantityCart(product);
   };
 
   const decreaseProductQty = (product) => {
     if (product.qty !== 1) {
-      dispatch(decreaseQuantity(decreaseQuantityCart(product)));
+      decreaseQuantityCart(product);
     }
   };
 

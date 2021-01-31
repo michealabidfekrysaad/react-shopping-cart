@@ -1,23 +1,19 @@
+import {
+  decreaseQuantity,
+  increaseQuantity,
+} from "../store/actions/Cart";
+import store from "../store/Index";
 
 export const IncreaseQuantityCart = (product) => {
   product.qty += 1;
   product.total += product.price;
-  return product;
-  // const dispatch = useDispatch();
-  // dispatch(
-  //   increaseQuantity({
-  //     ...product,
-  //     qty: product.qty + 1,
-  //     total: product.total + product.price,
-  //   })
-  // );
+  store.dispatch(increaseQuantity(product));
 };
-
 
 export const decreaseQuantityCart = (product) => {
   product.qty -= 1;
   product.total = product.qty * product.price;
-  return product;
+  store.dispatch(decreaseQuantity(product));
 };
 
 export const deleteProductCart = (product) => {
